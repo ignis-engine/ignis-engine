@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IgnisGame", "IgnisGame\IgnisGame.csproj", "{02B91493-99C0-4E88-8D85-C59240665311}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ignis", "Ignis\Ignis.csproj", "{B0A27A98-A385-4704-8186-677CC5E16DD0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		ReleaseWithAsserts|Any CPU = ReleaseWithAsserts|Any CPU
+		ReleaseAOT|Any CPU = ReleaseAOT|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02B91493-99C0-4E88-8D85-C59240665311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02B91493-99C0-4E88-8D85-C59240665311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02B91493-99C0-4E88-8D85-C59240665311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02B91493-99C0-4E88-8D85-C59240665311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02B91493-99C0-4E88-8D85-C59240665311}.ReleaseWithAsserts|Any CPU.ActiveCfg = ReleaseWithAsserts|Any CPU
+		{02B91493-99C0-4E88-8D85-C59240665311}.ReleaseWithAsserts|Any CPU.Build.0 = ReleaseWithAsserts|Any CPU
+		{02B91493-99C0-4E88-8D85-C59240665311}.ReleaseAOT|Any CPU.ActiveCfg = ReleaseAOT|Any CPU
+		{02B91493-99C0-4E88-8D85-C59240665311}.ReleaseAOT|Any CPU.Build.0 = ReleaseAOT|Any CPU
+		{B0A27A98-A385-4704-8186-677CC5E16DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0A27A98-A385-4704-8186-677CC5E16DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0A27A98-A385-4704-8186-677CC5E16DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0A27A98-A385-4704-8186-677CC5E16DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0A27A98-A385-4704-8186-677CC5E16DD0}.ReleaseWithAsserts|Any CPU.ActiveCfg = ReleaseWithAsserts|Any CPU
+		{B0A27A98-A385-4704-8186-677CC5E16DD0}.ReleaseWithAsserts|Any CPU.Build.0 = ReleaseWithAsserts|Any CPU
+		{B0A27A98-A385-4704-8186-677CC5E16DD0}.ReleaseAOT|Any CPU.ActiveCfg = ReleaseAOT|Any CPU
+		{B0A27A98-A385-4704-8186-677CC5E16DD0}.ReleaseAOT|Any CPU.Build.0 = ReleaseAOT|Any CPU
+	EndGlobalSection
+EndGlobal

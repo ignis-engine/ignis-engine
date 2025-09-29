@@ -1,0 +1,66 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>enable</Nullable>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <Configurations>Debug;Release;ReleaseWithAsserts;ReleaseAOT</Configurations>
+    <WarningLevel>9999</WarningLevel>
+    <AnalysisMode>All</AnalysisMode>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <Title>Ignis Game Engine</Title>
+    <Company>Robin Degen</Company>
+    <Product>Ignis Game Engine</Product>
+    <Copyright>Ignis Game Engine</Copyright>
+    <Authors>Robin 'Ruadeil' Degen</Authors>
+    <Description>A crossplatform Game Engine for desktop and mobile</Description>
+    <IgnisEnableAsserts>false</IgnisEnableAsserts>
+    <IgnisEnableJitCode>false</IgnisEnableJitCode>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <Optimize>false</Optimize>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <PublishAot>false</PublishAot>
+    <IgnisEnableAsserts>true</IgnisEnableAsserts>
+    <IgnisEnableJitCode>true</IgnisEnableJitCode>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <Optimize>true</Optimize>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <PublishAot>false</PublishAot>
+    <IgnisEnableAsserts>false</IgnisEnableAsserts>
+    <IgnisEnableJitCode>true</IgnisEnableJitCode>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'ReleaseWithAsserts'">
+    <Optimize>true</Optimize>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <PublishAot>false</PublishAot>
+    <IgnisEnableAsserts>true</IgnisEnableAsserts>
+    <IgnisEnableJitCode>true</IgnisEnableJitCode>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'ReleaseAOT'">
+    <Optimize>true</Optimize>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <PublishAot>true</PublishAot>
+    <IgnisEnableAsserts>false</IgnisEnableAsserts>
+    <IgnisEnableJitCode>false</IgnisEnableJitCode>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IgnisEnableAsserts)' == 'true'">
+    <DefineConstants>$(DefineConstants);IGNIS_ENABLE_ASSERTS</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IgnisEnableJitCode)' == 'true'">
+    <DefineConstants>$(DefineConstants);IGNIS_JIT_BUILD</DefineConstants>
+  </PropertyGroup>
+  <Target Name="TestMessage" BeforeTargets="PreBuildEvent">
+    <Message Importance="High" Text="[IGNIS] Build properties:" />
+    <Message Importance="High" Text="[IGNIS] Enable Asserts : $(IgnisEnableAsserts)" />
+    <Message Importance="High" Text="[IGNIS] Enable JIT code: $(IgnisEnableJitCode)" />
+    <Message Importance="High" Text="[IGNIS] Enable AOT     : $(PublishAot)" />
+  </Target>
+</Project>

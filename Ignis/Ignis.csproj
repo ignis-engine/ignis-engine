@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="ppy.SDL3-CS" Version="2025.920.0" />
+    <PackageReference Include="ppy.SDL3_image-CS" Version="2025.920.0" />
+    <PackageReference Include="ppy.SDL3_mixer-CS" Version="2025.920.0" />
+    <PackageReference Include="ppy.SDL3_ttf-CS" Version="2025.920.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeLibrary
+      Include="/home/robindegen/Development/External/prefix/lib/libSDL3.a"
+      Condition="$(RuntimeIdentifier.StartsWith('linux'))"
+    />
+    <NativeLibrary
+      Include="/home/robindegen/Development/External/prefix/lib/libSDL3_image.a"
+      Condition="$(RuntimeIdentifier.StartsWith('linux'))"
+    />
+  </ItemGroup>
+</Project>
