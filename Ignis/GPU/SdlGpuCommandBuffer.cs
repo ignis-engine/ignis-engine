@@ -47,6 +47,34 @@ internal unsafe class SdlGpuCommandBuffer : IDisposable
         return new SdlGpuTexture(Device, swapchainTexture, swapchainWidth, swapchainHeight, format);
     }
 
+    public void PushVertexUniformData(uint index, byte[] data)
+    {
+        fixed (byte* pData = data)
+        {
+            SDL3.SDL_PushGPUVertexUniformData(NativeCommandBuffer, index, (IntPtr)pData, (uint)data.Length);
+        }
+    }
+
+    public void PushVertexUniformData<T>(uint index, T* data)
+        where T : unmanaged
+    {
+        SDL3.SDL_PushGPUVertexUniformData(NativeCommandBuffer, index, (IntPtr)data, (uint)sizeof(T));
+    }
+
+    public void PushFragmentUniformData(uint index, byte[] data)
+    {
+        fixed (byte* pData = data)
+        {
+            SDL3.SDL_PushGPUFragmentUniformData(NativeCommandBuffer, index, (IntPtr)pData, (uint)data.Length);
+        }
+    }
+
+    public void PushFragmentUniformData<T>(uint index, T* data)
+        where T : unmanaged
+    {
+        SDL3.SDL_PushGPUFragmentUniformData(NativeCommandBuffer, index, (IntPtr)data, (uint)sizeof(T));
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Dispose()
     {
