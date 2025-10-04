@@ -1,5 +1,5 @@
 using System.Runtime.CompilerServices;
-using Ignis.Platform.Sdl;
+using Ignis.Platform;
 using SDL;
 
 namespace Ignis.GPU;

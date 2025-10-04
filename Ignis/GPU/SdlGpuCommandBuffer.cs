@@ -1,5 +1,5 @@
 using System.Runtime.CompilerServices;
-using Ignis.Platform.Sdl;
+using Ignis.Platform;
 using SDL;
 
 namespace Ignis.GPU;
@@ -26,7 +26,7 @@ internal unsafe class SdlGpuCommandBuffer : IDisposable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public SdlGpuTexture WaitAndAcquireSwapchainTexture(SdlWindow window)
+    public SdlGpuTexture WaitAndAcquireSwapchainTexture(Window window)
     {
         SDL_GPUTexture* swapchainTexture = null;
         uint swapchainWidth = 0;
@@ -73,6 +73,11 @@ internal unsafe class SdlGpuCommandBuffer : IDisposable
         where T : unmanaged
     {
         SDL3.SDL_PushGPUFragmentUniformData(NativeCommandBuffer, index, (IntPtr)data, (uint)sizeof(T));
+    }
+
+    public void GenerateMipmapsForTexture(SdlGpuTexture texture)
+    {
+        SDL3.SDL_GenerateMipmapsForGPUTexture(NativeCommandBuffer, texture.NativeTexture);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

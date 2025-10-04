@@ -1,13 +1,13 @@
 using Ignis.Math;
 using SDL;
 
-namespace Ignis.Platform.Sdl;
+namespace Ignis.Platform;
 
-internal unsafe class SdlWindow : IWindow
+internal unsafe class Window : IDisposable
 {
-    public SdlPointer<SDL_Window, SdlPlatformException> NativeWindow { get; private set; }
+    public SdlPointer<SDL_Window, PlatformException> NativeWindow { get; private set; }
 
-    public SdlWindow(string title, Vector2i dimensions)
+    public Window(string title, Vector2i dimensions)
     {
         NativeWindow = SDL3.SDL_CreateWindow(title, dimensions.X, dimensions.Y, SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
         Closing = false;
@@ -45,5 +45,5 @@ internal unsafe class SdlWindow : IWindow
         Closing = true;
     }
 
-    public static implicit operator SDL_Window*(SdlWindow window) => window.NativeWindow;
+    public static implicit operator SDL_Window*(Window window) => window.NativeWindow;
 }

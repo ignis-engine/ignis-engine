@@ -1,4 +1,4 @@
-namespace Ignis.Platform.Sdl;
+namespace Ignis.Platform;
 
 internal unsafe struct SdlPointer<T, TE> : IDisposable
     where T : unmanaged

@@ -1,4 +1,4 @@
-using Ignis.Platform.Sdl;
+using Ignis.Platform;
 using SDL;
 
 namespace Ignis.GPU;
@@ -9,7 +9,7 @@ internal unsafe class SdlGpuDevice : IDisposable
 
     public SDL_GPUShaderFormat ShaderLanguage { get; }
 
-    public SdlGpuDevice(SdlWindow window, bool debugMode = false)
+    public SdlGpuDevice(Window window, bool debugMode = false)
     {
         NativeDevice = SDL3.SDL_CreateGPUDevice(
             SDL_GPUShaderFormat.SDL_GPU_SHADERFORMAT_SPIRV
