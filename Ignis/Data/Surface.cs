@@ -11,8 +11,18 @@ internal unsafe class Surface : IDisposable
     /// <summary>
     /// Gets the pointer to the underlying surface handle.
     /// </summary>
-    public SdlPointer<SDL_Surface, DataException> Pointer { get; private set; }
+    public SdlPointer<SDL_Surface, DataException> NativeSurface { get; private set; }
     private readonly bool _deleteOnDispose;
+
+    /// <summary>
+    /// Get the size of the surface in bytes.
+    /// </summary>
+    public ulong Size => (ulong)(NativeSurface.Pointer->h * NativeSurface.Pointer->pitch);
+
+    /// <summary>
+    /// Gets a pointer to the pixel data of the surface.
+    /// </summary>
+    public IntPtr Data => NativeSurface.Pointer->pixels;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Surface"/> class with a given surface pointer.
@@ -22,7 +32,7 @@ internal unsafe class Surface : IDisposable
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="pointer"/> is null.</exception>
     public Surface(SDL_Surface* pointer, bool deleteOnDispose = true)
     {
-        Pointer = pointer;
+        NativeSurface = pointer;
         _deleteOnDispose = deleteOnDispose;
     }
 
@@ -52,6 +62,33 @@ internal unsafe class Surface : IDisposable
     public static Surface CreateFrom(int width, int height, SDL_PixelFormat format, void* pixels, int pitch)
     {
         return new Surface(SDL3.SDL_CreateSurfaceFrom(width, height, format, (IntPtr)pixels, pitch));
+    }
+
+    /// <summary>
+    /// Loads an image from the specified <see cref="IoStream"/> and creates a <see cref="Surface"/>.
+    /// </summary>
+    /// <param name="stream">The IOStream to load an image from.</param>
+    /// <returns>A new <see cref="Surface"/> instance containing the loaded image.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="stream"/> is null.</exception>
+    /// <exception cref="DataException">Thrown if the image cannot be loaded.</exception>
+    public static Surface Load(IoStream stream)
+    {
+        return new Surface(SDL3_image.IMG_Load_IO(stream.NativeStream, false));
+    }
+
+    /// <summary>
+    /// Loads an image from the specified file path and creates a <see cref="Surface"/>.
+    /// </summary>
+    /// <param name="filePath">The path to the file.</param>
+    /// <returns>A new <see cref="Surface"/> instance containing the loaded image.</returns>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="filePath"/> is null or empty.</exception>
+    /// <exception cref="DataException">Thrown if the image cannot be loaded.</exception>
+    public static Surface Load(string filePath)
+    {
+        if (string.IsNullOrEmpty(filePath))
+            throw new ArgumentException("File path cannot be null or empty.");
+
+        return new Surface(SDL3_image.IMG_Load(filePath));
     }
 
     /// <summary>
@@ -87,7 +124,7 @@ internal unsafe class Surface : IDisposable
     /// <exception cref="DataException">Thrown if the surface cannot be locked.</exception>
     public void Lock()
     {
-        if (!SDL3.SDL_LockSurface(Pointer))
+        if (!SDL3.SDL_LockSurface(NativeSurface))
             throw new DataException();
     }
 
@@ -96,7 +133,7 @@ internal unsafe class Surface : IDisposable
     /// </summary>
     public void Unlock()
     {
-        SDL3.SDL_UnlockSurface(Pointer);
+        SDL3.SDL_UnlockSurface(NativeSurface);
     }
 
     /// <summary>
@@ -107,7 +144,7 @@ internal unsafe class Surface : IDisposable
     /// <exception cref="DataException">Thrown if the surface cannot be saved.</exception>
     public void SaveBMP(IoStream stream)
     {
-        if (!SDL3.SDL_SaveBMP_IO(Pointer, stream.NativeStream, false))
+        if (!SDL3.SDL_SaveBMP_IO(NativeSurface, stream.NativeStream, false))
             throw new DataException();
     }
 
@@ -122,7 +159,7 @@ internal unsafe class Surface : IDisposable
         if (string.IsNullOrEmpty(filePath))
             throw new ArgumentException("File path cannot be null or empty.");
 
-        if (!SDL3.SDL_SaveBMP(Pointer, filePath))
+        if (!SDL3.SDL_SaveBMP(NativeSurface, filePath))
             throw new DataException();
     }
 
@@ -130,8 +167,8 @@ internal unsafe class Surface : IDisposable
     public void Dispose()
     {
         if (_deleteOnDispose)
-            SDL3.SDL_DestroySurface(Pointer);
+            SDL3.SDL_DestroySurface(NativeSurface);
 
-        Pointer = null;
+        NativeSurface = null;
     }
 }
