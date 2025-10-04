@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Ignis.Interop;
 using Ignis.Platform.Sdl;
 using SDL;
@@ -20,6 +21,7 @@ internal unsafe class SdlGpuShader : ReferenceCountedBase, IDisposable
 
     public uint NumUniformBuffers { get; }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public SdlGpuShader(
         SdlGpuDevice device,
         byte[] shaderBlob,

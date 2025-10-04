@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Ignis.Platform.Sdl;
 using SDL;
 
@@ -9,6 +10,7 @@ internal unsafe class SdlGpuSampler : ReferenceCountedBase, IDisposable
 
     public SdlGpuDevice Device { get; }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public SdlGpuSampler(
         SdlGpuDevice device,
         SDL_GPUFilter minFilter = SDL_GPUFilter.SDL_GPU_FILTER_NEAREST,

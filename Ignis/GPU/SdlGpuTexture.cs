@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Ignis.Platform.Sdl;
 using SDL;
 
@@ -42,6 +43,7 @@ internal unsafe class SdlGpuTexture : ReferenceCountedBase, IDisposable
         set => SDL3.SDL_SetGPUTextureName(Device, NativeTexture, value);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public SdlGpuTexture(
         SdlGpuDevice device,
         uint width,
@@ -63,6 +65,7 @@ internal unsafe class SdlGpuTexture : ReferenceCountedBase, IDisposable
             debugLabel
         ) { }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public SdlGpuTexture(
         SdlGpuDevice device,
         uint width,

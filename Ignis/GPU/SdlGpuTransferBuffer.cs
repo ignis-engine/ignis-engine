@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Ignis.Platform.Sdl;
 using SDL;
 
@@ -14,6 +15,7 @@ internal unsafe class SdlGpuTransferBuffer : ReferenceCountedBase, IDisposable
 
     public bool IsMapped { get; private set; }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public SdlGpuTransferBuffer(SdlGpuDevice device, SDL_GPUTransferBufferUsage usage, uint size)
     {
         Device = device;
@@ -30,6 +32,7 @@ internal unsafe class SdlGpuTransferBuffer : ReferenceCountedBase, IDisposable
         NativeBuffer = SDL3.SDL_CreateGPUTransferBuffer(device, &info);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void* Map(bool cycle = false)
     {
         IgnisDebug.Assert(!IsMapped, "Buffer is already mapped.");
@@ -44,6 +47,7 @@ internal unsafe class SdlGpuTransferBuffer : ReferenceCountedBase, IDisposable
         return result;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Unmap()
     {
         IgnisDebug.Assert(IsMapped, "Buffer is not mapped.");
@@ -68,6 +72,7 @@ internal unsafe class SdlGpuTransferBuffer : ReferenceCountedBase, IDisposable
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Dispose()
     {
         SDL3.SDL_ReleaseGPUTransferBuffer(Device, NativeBuffer);

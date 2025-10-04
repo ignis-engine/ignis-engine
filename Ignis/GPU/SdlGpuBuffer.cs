@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Ignis.Platform.Sdl;
 using SDL;
 
@@ -16,6 +17,7 @@ internal unsafe class SdlGpuBuffer : ReferenceCountedBase, IDisposable
         set => SDL3.SDL_SetGPUBufferName(Device, NativeBuffer, value);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public SdlGpuBuffer(SdlGpuDevice device, SDL_GPUBufferUsageFlags usage, uint size, string? debugLabel = null)
     {
         Device = device;
