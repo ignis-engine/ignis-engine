@@ -1,6 +1,7 @@
 // The callback wrappers require a wide Exception catch-all
 #pragma warning disable CA1031
 
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using SDL;
 
@@ -8,7 +9,7 @@ namespace Ignis.Platform;
 
 internal static unsafe class IoStreamWrapper
 {
-    [UnmanagedCallersOnly(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     internal static long GetSizeWrapper(IntPtr userData)
     {
         var handle = GCHandle.FromIntPtr(userData);
@@ -28,7 +29,7 @@ internal static unsafe class IoStreamWrapper
         }
     }
 
-    [UnmanagedCallersOnly(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     internal static long SeekWrapper(IntPtr userData, long offset, SDL_IOWhence whence)
     {
         var handle = GCHandle.FromIntPtr(userData);
@@ -48,7 +49,7 @@ internal static unsafe class IoStreamWrapper
         }
     }
 
-    [UnmanagedCallersOnly(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     internal static UIntPtr ReadWrapper(IntPtr userData, IntPtr ptr, UIntPtr size, SDL_IOStatus* status)
     {
         var handle = GCHandle.FromIntPtr(userData);
@@ -77,7 +78,7 @@ internal static unsafe class IoStreamWrapper
         }
     }
 
-    [UnmanagedCallersOnly(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     internal static UIntPtr WriteWrapper(IntPtr userData, IntPtr ptr, UIntPtr size, SDL_IOStatus* status)
     {
         var handle = GCHandle.FromIntPtr(userData);
@@ -102,7 +103,7 @@ internal static unsafe class IoStreamWrapper
         }
     }
 
-    [UnmanagedCallersOnly(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     internal static SDLBool FlushWrapper(IntPtr userData, SDL_IOStatus* status)
     {
         var handle = GCHandle.FromIntPtr(userData);
@@ -124,7 +125,7 @@ internal static unsafe class IoStreamWrapper
         }
     }
 
-    [UnmanagedCallersOnly(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     internal static SDLBool CloseWrapper(IntPtr userData)
     {
         var handle = GCHandle.FromIntPtr(userData);
