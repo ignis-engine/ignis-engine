@@ -2,7 +2,7 @@ namespace Ignis;
 
 public interface IReferenceCounted
 {
-    int AddReference();
+    void AddReference();
     int DecreaseReference();
 }
 
@@ -15,9 +15,9 @@ public class ReferenceCountedBase : IReferenceCounted
         _referenceCount = 0;
     }
 
-    public int AddReference()
+    public void AddReference()
     {
-        return Interlocked.Increment(ref _referenceCount);
+        Interlocked.Increment(ref _referenceCount);
     }
 
     public int DecreaseReference()
@@ -26,7 +26,7 @@ public class ReferenceCountedBase : IReferenceCounted
     }
 }
 
-public class ReferenceCounted<T> : ReferenceCountedBase, IDisposable
+public class ReferenceCounted<T> : IDisposable
     where T : IReferenceCounted, IDisposable
 {
     private T? _instance;
@@ -55,5 +55,11 @@ public class ReferenceCounted<T> : ReferenceCountedBase, IDisposable
         _instance = default;
     }
 
-    public static implicit operator T?(ReferenceCounted<T> r) => r._instance;
+    public static implicit operator T(ReferenceCounted<T> r)
+    {
+        IgnisDebug.Assert(r._instance is not null, "Attempted to access a null ReferenceCounted instance.");
+        return r._instance;
+    }
+
+    public static implicit operator ReferenceCounted<T>(T? instance) => new(instance);
 }
