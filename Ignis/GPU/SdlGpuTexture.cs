@@ -38,6 +38,8 @@ internal unsafe class SdlGpuTexture : ReferenceCountedBase, IDisposable
 
     public SDL_GPUSampleCount SampleCount { get; }
 
+    public bool OwnsData { get; }
+
     public string DebugLabel
     {
         set => SDL3.SDL_SetGPUTextureName(Device, NativeTexture, value);
@@ -106,11 +108,37 @@ internal unsafe class SdlGpuTexture : ReferenceCountedBase, IDisposable
 
         if (debugLabel is not null)
             DebugLabel = debugLabel;
+
+        OwnsData = true;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public SdlGpuTexture(
+        SdlGpuDevice device,
+        SDL_GPUTexture* texture,
+        uint width,
+        uint height,
+        SDL_GPUTextureFormat format
+    )
+    {
+        Device = device;
+        Width = width;
+        Height = height;
+        LayerCountOrDepth = 1;
+        NumLevels = 1;
+        Format = format;
+        Type = SDL_GPUTextureType.SDL_GPU_TEXTURETYPE_2D;
+        Usage = 0;
+        SampleCount = SDL_GPUSampleCount.SDL_GPU_SAMPLECOUNT_1;
+        NativeTexture = texture;
+        OwnsData = false;
     }
 
     public void Dispose()
     {
-        SDL3.SDL_ReleaseGPUTexture(Device, NativeTexture);
+        if (OwnsData)
+            SDL3.SDL_ReleaseGPUTexture(Device, NativeTexture);
+
         NativeTexture.Dispose();
     }
 }
