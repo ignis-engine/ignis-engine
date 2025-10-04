@@ -11,7 +11,12 @@ internal unsafe class SdlGpuBuffer : ReferenceCountedBase, IDisposable
 
     public uint Size { get; }
 
-    public SdlGpuBuffer(SdlGpuDevice device, SDL_GPUBufferUsageFlags usage, uint size)
+    public string DebugLabel
+    {
+        set => SDL3.SDL_SetGPUBufferName(Device, NativeBuffer, value);
+    }
+
+    public SdlGpuBuffer(SdlGpuDevice device, SDL_GPUBufferUsageFlags usage, uint size, string? debugLabel = null)
     {
         Device = device;
         Size = size;
@@ -24,6 +29,9 @@ internal unsafe class SdlGpuBuffer : ReferenceCountedBase, IDisposable
         };
 
         NativeBuffer = SDL3.SDL_CreateGPUBuffer(device, &info);
+
+        if (debugLabel is not null)
+            DebugLabel = debugLabel;
     }
 
     public void Dispose()
