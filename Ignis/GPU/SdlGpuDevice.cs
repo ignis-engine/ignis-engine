@@ -9,6 +9,8 @@ internal unsafe class SdlGpuDevice : IDisposable
 
     public SDL_GPUShaderFormat ShaderLanguage { get; }
 
+    public Window Window { get; }
+
     public SdlGpuDevice(Window window, bool debugMode = false)
     {
         NativeDevice = SDL3.SDL_CreateGPUDevice(
@@ -20,6 +22,16 @@ internal unsafe class SdlGpuDevice : IDisposable
         );
 
         ShaderLanguage = GetChosenShaderFormat();
+
+        Window = window;
+
+        if (!SDL3.SDL_ClaimWindowForGPUDevice(NativeDevice, Window))
+            throw new SdlGpuException();
+    }
+
+    public SDL_GPUTextureFormat GetSwapchainTextureFormat()
+    {
+        return SDL3.SDL_GetGPUSwapchainTextureFormat(NativeDevice, Window);
     }
 
     public void Dispose()

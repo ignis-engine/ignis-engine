@@ -43,10 +43,16 @@ internal unsafe class SdlGpuCommandBuffer : IDisposable
         )
             throw new SdlGpuException();
 
-        var format = SDL3.SDL_GetGPUSwapchainTextureFormat(Device.NativeDevice, window.NativeWindow);
-        return new SdlGpuTexture(Device, swapchainTexture, swapchainWidth, swapchainHeight, format);
+        return new SdlGpuTexture(
+            Device,
+            swapchainTexture,
+            swapchainWidth,
+            swapchainHeight,
+            Device.GetSwapchainTextureFormat()
+        );
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void PushVertexUniformData(uint index, byte[] data)
     {
         fixed (byte* pData = data)
@@ -55,12 +61,14 @@ internal unsafe class SdlGpuCommandBuffer : IDisposable
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void PushVertexUniformData<T>(uint index, T* data)
         where T : unmanaged
     {
         SDL3.SDL_PushGPUVertexUniformData(NativeCommandBuffer, index, (IntPtr)data, (uint)sizeof(T));
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void PushFragmentUniformData(uint index, byte[] data)
     {
         fixed (byte* pData = data)
@@ -69,12 +77,14 @@ internal unsafe class SdlGpuCommandBuffer : IDisposable
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void PushFragmentUniformData<T>(uint index, T* data)
         where T : unmanaged
     {
         SDL3.SDL_PushGPUFragmentUniformData(NativeCommandBuffer, index, (IntPtr)data, (uint)sizeof(T));
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void GenerateMipmapsForTexture(SdlGpuTexture texture)
     {
         SDL3.SDL_GenerateMipmapsForGPUTexture(NativeCommandBuffer, texture.NativeTexture);

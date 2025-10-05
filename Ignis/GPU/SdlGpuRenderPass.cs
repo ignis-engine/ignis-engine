@@ -22,17 +22,20 @@ internal unsafe class SdlGpuRenderPass : ReferenceCountedBase, IDisposable
         NativeRenderPass = SDL3.SDL_BeginGPURenderPass(commandBuffer.NativeCommandBuffer, &info, 1, null);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void BindGraphicsPipeline(SdlGpuGraphicsPipeline pipeline)
     {
         SDL3.SDL_BindGPUGraphicsPipeline(NativeRenderPass, pipeline.NativeGraphicsPipeline);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void BindVertexBuffer(SdlGpuBuffer vertexBuffer, uint firstSlot = 0, uint offset = 0)
     {
         var region = new SDL_GPUBufferBinding { buffer = vertexBuffer.NativeBuffer, offset = offset };
         SDL3.SDL_BindGPUVertexBuffers(NativeRenderPass, firstSlot, &region, 1);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void BindIndexBuffer(
         SdlGpuBuffer indexBuffer,
         uint offset = 0,
@@ -43,6 +46,7 @@ internal unsafe class SdlGpuRenderPass : ReferenceCountedBase, IDisposable
         SDL3.SDL_BindGPUIndexBuffer(NativeRenderPass, &region, elementSize);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void BindFragmentSamplers(SdlGpuTexture texture, SdlGpuSampler sampler, uint index)
     {
         var binding = new SDL_GPUTextureSamplerBinding
@@ -53,14 +57,22 @@ internal unsafe class SdlGpuRenderPass : ReferenceCountedBase, IDisposable
         SDL3.SDL_BindGPUFragmentSamplers(NativeRenderPass, index, &binding, 1);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void DrawPrimitives(uint vertexCount, uint firstVertex)
     {
         SDL3.SDL_DrawGPUPrimitives(NativeRenderPass, vertexCount, 1, firstVertex, 0);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void DrawIndexedPrimitives(uint numIndices, uint startIndex, int vertexOffset)
     {
         SDL3.SDL_DrawGPUIndexedPrimitives(NativeRenderPass, numIndices, 1, startIndex, vertexOffset, 0);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void SetViewport(SDL_GPUViewport viewport)
+    {
+        SDL3.SDL_SetGPUViewport(NativeRenderPass, &viewport);
     }
 
     public void Dispose()

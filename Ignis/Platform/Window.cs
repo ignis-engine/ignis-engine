@@ -9,6 +9,9 @@ internal unsafe class Window : IDisposable
 
     public Window(string title, Vector2i dimensions)
     {
+        if (!SDL3.SDL_Init(SDL_InitFlags.SDL_INIT_VIDEO))
+            throw new PlatformException();
+
         NativeWindow = SDL3.SDL_CreateWindow(title, dimensions.X, dimensions.Y, SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
         Closing = false;
     }
