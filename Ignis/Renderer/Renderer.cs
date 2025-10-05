@@ -93,12 +93,13 @@ public unsafe class Renderer : IDisposable
             );
             renderPass.BindGraphicsPipeline(_pipeline);
 
+            var windowDimensions = _window.Dimensions;
             var viewport = new SDL_GPUViewport
             {
                 x = 0,
                 y = 0,
-                w = 1920,
-                h = 1080,
+                w = windowDimensions.X,
+                h = windowDimensions.Y,
                 min_depth = 0,
                 max_depth = 100.0f,
             };
